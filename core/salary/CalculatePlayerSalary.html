@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Coach Salary</title>
+    <title>Player Salary</title>
 </head>
 <body>
-<h1>Coach Salary Manager</h1>
+<h1>Player Salary Manager</h1>
 <a href="#" onclick="createNewWeek()">Create New Week</a>
 <form>
     <table>
         <tr>
-            <th>Coach</th>
-            <th><select name="coach" id="coach"></select></th>
+            <th>Player</th>
+            <th><select name="player" id="player"></select></th>
         </tr>
         <tr>
             <th>Week</th>
@@ -20,6 +20,14 @@
         <tr>
             <th>Bonus</th>
             <th><input type="text" name="bonus" id="bonus" value="0"></th>
+        </tr>
+        <tr>
+            <th>Minutes on field</th>
+            <th><input type="text" name="mof" id="mof"></th>
+        </tr>
+        <tr>
+            <th>Salary per MoF</th>
+            <th><input type="text" name="perMof" id="perMof"></th>
         </tr>
     </table>
     <button type="submit" onclick="calculateSalary()">Calculate</button>
@@ -30,50 +38,51 @@
 <script>
     loadInputData();
     function loadInputData(){
-        getAllCoach();
+        getAllPlayer();
         getAllWeek();
     }
-    function getAllCoach(){
+    function getAllPlayer(){
         $.ajax({
             type: "GET",
-            url:"http://localhost:8080/coach",
+            url:"http://localhost:8080/player",
             success:function (data){
                 let content ="";
                 for (let i = 0; i < data.length; i++) {
-                    content+=`<option id="coachid${data[i].id}" name="${data[i].name}" value="${data[i].id}">${data[i].name}_${data[i].nationality.name}_${data[i].doB}</option>`
+                    content+=`<option id="playerid${data[i].id}" name="${data[i].name}" value="${data[i].id}">${data[i].name}_${data[i].nationality.name}_${data[i].doB}</option>`
                 }
-                // document.getElementById("week").innerHTML = content;
-                $('#coach').html(content);
+                 $('#player').html(content);
             }
         })
     }
     function calculateSalary(){
         event.preventDefault();
-        let coach_id = parseInt($('#coach').val());
-        let optionId = "coachid"+coach_id;
-        let coach = document.getElementById(optionId).getAttribute("name");
+        let player_id = parseInt($('#player').val());
+        let optionId = "playerid"+player_id;
+        let player = document.getElementById(optionId).getAttribute("name");
         let week_id =parseInt($('#week').val());
         let bonus = parseInt($('#bonus').val());
+        let mof = parseInt($('#mof').val());
+        let perMof = parseInt($('#perMof').val());
         $.ajax({
             type: "GET",
-            url:"http://localhost:8080/coach/"+coach_id,
+            url:"http://localhost:8080/player/"+player_id,
             success:function (data){
-                let salary = data.base_salary+bonus;
-                saveCoachSalaryToDB(coach_id,week_id,salary);
-                window.confirm(""+ coach+"\nSalary:"+salary);
+                let salary = data.base_salary+bonus+mof*perMof;
+                savePlayerSalaryToDB(player_id,week_id,salary);
+                window.confirm(""+ player+"\nSalary:"+salary);
             }
         })
     }
-    function saveCoachSalaryToDB(coach_id,week_id,salary){
-let obj = {
-    coach:{
-        id:coach_id
-    },
-    week:{
-        id:week_id
-    },
-    weekly_salary:salary
-}
+    function savePlayerSalaryToDB(player_id,week_id,salary){
+        let obj = {
+            player:{
+                id:player_id
+            },
+            week:{
+                id:week_id
+            },
+            weekly_salary:salary
+        }
 
         $.ajax({
             headers: {
@@ -82,7 +91,7 @@ let obj = {
             },
             type: "POST",
             data: JSON.stringify(obj),
-            url: "http://localhost:8080/coach_salary",
+            url: "http://localhost:8080/player_salary",
             success: function (){
                 window.alert("Saved to Database!")
             }

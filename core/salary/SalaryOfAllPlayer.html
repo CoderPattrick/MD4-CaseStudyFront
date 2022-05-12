@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Coach Salary</title>
+    <title>Player Salary</title>
 </head>
 <body>
-<h1>Coach salary</h1>
-<select name="week" id="week" onchange="getCoachSalaryByWeek(this.value)"></select>
-<table id="coach_salary" border="1">
+<h1>Player salary</h1>
+<select name="week" id="week" onchange="getPlayerSalaryByWeek(this.value)"></select>
+<table id="player_salary" border="1">
     <tr>
-        <th>Coach</th>
-        <th>Coach_DoB</th>
+        <th>Player</th>
+        <th>Player_DoB</th>
         <th>Nationality</th>
         <th>Salary</th>
     </tr>
@@ -19,21 +19,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="common_function.js"></script>
 <script>
-    function getCoachSalaryByWeek(week_id){
+    function getPlayerSalaryByWeek(week_id){
         $.ajax({
             type: "GET",
-            url:"http://localhost:8080/week/"+week_id+"/coach_salary",
+            url:"http://localhost:8080/week/"+week_id+"/player_salary",
             success:function (data){
                 let content ="<tr>\n" +
-                    "        <th>Coach</th>\n" +
-                    "        <th>Coach_DoB</th>\n" +
+                    "        <th>Player</th>\n" +
+                    "        <th>Player_DoB</th>\n" +
                     "        <th>Nationality</th>\n" +
                     "        <th>Salary</th>\n" +
                     "    </tr>";
                 for (let i = 0; i < data.length; i++) {
-                    content+="<tr><td>"+data[i].coach+"</td><td>"+data[i].coach_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].weekly_salary+"</td></tr>";
+                    content+="<tr><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].weekly_salary+"</td></tr>";
                 }
-                $('#coach_salary').html(content);
+                $('#player_salary').html(content);
             }
         })
     }
