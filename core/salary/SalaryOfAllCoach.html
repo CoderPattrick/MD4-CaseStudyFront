@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coach Salary</title>
+</head>
+<body>
+<h1>Coach salary</h1>
+<select name="week" id="week" onchange="getCoachSalaryByWeek(this.value)"></select>
+<table id="coach_salary" border="1">
+    <tr>
+        <th>Coach</th>
+        <th>Coach_DoB</th>
+        <th>Nationality</th>
+        <th>Salary</th>
+    </tr>
+</table>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function getCoachSalaryByWeek(week_id){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/week/"+week_id+"/coach_salary",
+            success:function (data){
+                let content ="<tr>\n" +
+                    "        <th>Coach</th>\n" +
+                    "        <th>Coach_DoB</th>\n" +
+                    "        <th>Nationality</th>\n" +
+                    "        <th>Salary</th>\n" +
+                    "    </tr>";
+                for (let i = 0; i < data.length; i++) {
+                    content+="<tr><td>"+data[i].coach+"</td><td>"+data[i].coach_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].weekly_salary+"</td></tr>";
+                }
+                $('#coach_salary').html(content);
+            }
+        })
+    }
+    function getAllWeek(){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/week",
+            success:function (data){
+                let content ="";
+                for (let i = 0; i < data.length; i++) {
+                    content+=`<option value="${data[i].id}">${data[i].first_day_of_the_week}</option>`
+                }
+                // document.getElementById("week").innerHTML = content;
+                $('#week').html(content);
+            }
+        })
+    }
+    getAllWeek();
+</script>
+</html>

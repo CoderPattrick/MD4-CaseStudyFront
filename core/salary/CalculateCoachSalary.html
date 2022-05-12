@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coach Salary</title>
+</head>
+<body>
+<h1>Coach Salary Manager</h1>
+<a href="#" onclick="createNewWeek()">Create New Week</a>
+<form>
+    <table>
+        <tr>
+            <th>Coach</th>
+            <th><select name="coach" id="coach"></select></th>
+        </tr>
+        <tr>
+            <th>Week</th>
+            <th><select name="week" id="week"></select></th>
+        </tr>
+        <tr>
+            <th>Bonus</th>
+            <th><input type="text" name="bonus" id="bonus" value="0"></th>
+        </tr>
+    </table>
+    <button type="submit" onclick="calculateSalary()">Calculate</button>
+</form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    loadInputData();
+    function loadInputData(){
+        getAllCoach();
+        getAllWeek();
+    }
+    function getAllCoach(){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/coach",
+            success:function (data){
+                let content ="";
+                for (let i = 0; i < data.length; i++) {
+                    content+=`<option id="coachid${data[i].id}" name="${data[i].name}" value="${data[i].id}">${data[i].name}_${data[i].nationality.name}_${data[i].doB}</option>`
+                }
+                // document.getElementById("week").innerHTML = content;
+                $('#coach').html(content);
+            }
+        })
+    }
+    function getAllWeek(){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/week",
+            success:function (data){
+                let content ="";
+                for (let i = 0; i < data.length; i++) {
+                    content+=`<option value="${data[i].id}">${data[i].first_day_of_the_week}</option>`
+                }
+                // document.getElementById("week").innerHTML = content;
+                $('#week').html(content);
+            }
+        })
+    }
+    function createNewWeek(){
+        event.preventDefault();
+       let a = prompt("Input first day of the week");
+       let newWeek ={
+            first_day_of_the_week: a
+       }
+       $.ajax({
+           headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+           },
+           type: "POST",
+           data: JSON.stringify(newWeek),
+           //tên API
+           url: "http://localhost:8080/week",
+           //xử lý khi thành công
+           success: function (){
+               window.alert("New Week created!");
+               getAllWeek();
+           }
+       })
+    }
+    function calculateSalary(){
+        event.preventDefault();
+        let coach_id = parseInt($('#coach').val());
+        let optionId = "coachid"+coach_id;
+        let coach = document.getElementById(optionId).getAttribute("name");
+        let week_id =parseInt($('#week').val());
+        let bonus = parseInt($('#bonus').val());
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/coach/"+coach_id,
+            success:function (data){
+                let salary = data.base_salary+bonus;
+                saveCoachSalaryToDB(coach_id,week_id,salary);
+                window.confirm(""+ coach+"\nSalary:"+salary);
+            }
+        })
+    }
+    function saveCoachSalaryToDB(coach_id,week_id,salary){
+let obj = {
+    coach:{
+        id:coach_id
+    },
+    week:{
+        id:week_id
+    },
+    weekly_salary:salary
+}
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            // enctype:"multipart",
+            data: JSON.stringify(obj),
+            //tên API
+            url: "http://localhost:8080/coach_salary",
+            //xử lý khi thành công
+            success: function (){
+                window.alert("Saved to Database!")
+            }
+        })
+    }
+</script>
+</html>
