@@ -68,9 +68,9 @@ let content= `<div>
                         <label for="avatar" class="form-label">Avatar</label>
                         <input type="text" class="form-control" id="avatar">
                     </div>
-                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+<!--                   <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
+<!--                </div>-->
 
                 </form>
 

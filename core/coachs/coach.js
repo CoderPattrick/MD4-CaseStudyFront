@@ -43,9 +43,9 @@ function showCoachDetail(id) {
                         <label for="cv" class="form-label">CV</label>
                         <input type="text" class="form-control" id="cv">
                     </div>
-                     <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
+<!--                     <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
+<!--                </div>-->
                 </form>
 </div>`
     $("#showDetail").html(content);
