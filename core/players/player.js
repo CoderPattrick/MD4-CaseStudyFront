@@ -1,5 +1,23 @@
-function showPlayer() {
+let data = localStorage.getItem("data");
+if (data == null){
+    window.location.href = "../login/login.html"
+}
+else {
+    let obj = JSON.parse(data);
+    let name = obj.name;
+    console.log(name);
+    $('#name').html(name)
+    let token = obj.accessToken;
+    showPlayer(token);
+}
+
+
+function showPlayer(token) {
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type:"GET",
         url:"http://localhost:8080/player",
         success:function (player) {
@@ -20,8 +38,7 @@ function showPlayer() {
         }
     })
 }
-showPlayer();
-function PlayerView(id) {
+function PlayerView(id,token) {
 let content= `<div>
  <form>
                     <div class="mb-3">
