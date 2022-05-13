@@ -85,7 +85,7 @@ $.ajax({
          $('#dob1').val(player.doB)
          $('#nationality1').val(player.nationality.name)
          $('#performance1').val(player.performance.name)
-        $('#status1').val(player.status.name)
+         $('#status1').val(player.status.name)
          $('#base_salary').val(player.base_salary)
          $('#height').val(player.height)
          $('#weight').val(player.weight)
