@@ -45,7 +45,6 @@ function showCoachDetail(id) {
                     </div>
                      <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="ViewCoach()" data-dismiss="modal">Close</button>
                 </div>
                 </form>
 </div>`
@@ -56,32 +55,9 @@ function showCoachDetail(id) {
         success:function (coach) {
             $('#name1').val(coach.name)
             $('#nationality1').val(coach.nationality.name)
-            $('#dob1').val(coach.doB)
+            $('#dob1').val(coach.doB.name)
             $('#base_salary').val(coach.base_salary)
             $('#cv').val(coach.cv)
         }
     })
-
-}
-function ViewCoach(id) {
-    let name=$(`#name1`).val()
-    let nationality=$(`#nationality1`).val()
-    let doB=$(`#doB1`).val()
-    let base_salary=$(`#base_salary`).val()
-    let cv=$(`#cv`).val()
-    let coach={
-        "name":name,
-        "nationality":nationality,
-        "doB":doB,
-        "base_salary":base_salary,
-        "cv":cv
-    }
-    $.ajax({
-        type:"POST",
-        url:"http://localhost:8080/coach",
-        data:JSON.stringify(coach),
-        success:showAllCoach
-    });
-    event.preventDefault();
-
 }
