@@ -25,15 +25,15 @@ function showCoachDetail(id) {
  <form id="coach">
                     <div class="mb-3">
                         <label for="name1" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name1">
                     </div>
                     <div class="mb-3">
                         <label for="nationality1" class="form-label">Nationality</label>
-                        <input type="text" class="form-control" id="nationality1">
+                        <input type="nationality" class="form-control" id="nationality1">
                     </div>
                     <div class="mb-3">
-                        <label for="doB1" class="form-label">DoB</label>
-                        <input type="text" class="form-control" id="doB1">
+                        <label for="dob1" class="form-label">DoB</label>
+                        <input type="text" class="form-control" id="dob1">
                     </div>
                     <div class="mb-3">
                         <label for="base_salary" class="form-label">Base_Salary</label>
@@ -55,7 +55,7 @@ function showCoachDetail(id) {
         success:function (coach) {
             $('#name1').val(coach.name)
             $('#nationality1').val(coach.nationality.name)
-            $('#dob1').val(coach.doB.name)
+            $('#dob1').val(coach.doB)
             $('#base_salary').val(coach.base_salary)
             $('#cv').val(coach.cv)
         }
