@@ -10,7 +10,6 @@ function showAllCoach() {
              <th>${coach[i].name}</th>
              <th>${coach[i].nationality.name}</th>
              <th>${coach[i].doB}</th>
-             
              <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showCoachDetail(${coach[i].id})">View</button></td>
 
 </tr>`
@@ -26,15 +25,15 @@ function showCoachDetail(id) {
  <form id="coach">
                     <div class="mb-3">
                         <label for="name1" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name1">
                     </div>
                     <div class="mb-3">
                         <label for="nationality1" class="form-label">Nationality</label>
-                        <input type="text" class="form-control" id="nationality1">
+                        <input type="nationality" class="form-control" id="nationality1">
                     </div>
                     <div class="mb-3">
-                        <label for="doB1" class="form-label">DoB</label>
-                        <input type="text" class="form-control" id="doB1">
+                        <label for="dob1" class="form-label">DoB</label>
+                        <input type="text" class="form-control" id="dob1">
                     </div>
                     <div class="mb-3">
                         <label for="base_salary" class="form-label">Base_Salary</label>
@@ -44,10 +43,9 @@ function showCoachDetail(id) {
                         <label for="cv" class="form-label">CV</label>
                         <input type="text" class="form-control" id="cv">
                     </div>
-                     <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="ViewCoach()" data-dismiss="modal">Close</button>
-                </div>
+<!--                     <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>-->
+<!--                </div>-->
                 </form>
 </div>`
     $("#showDetail").html(content);
@@ -62,27 +60,4 @@ function showCoachDetail(id) {
             $('#cv').val(coach.cv)
         }
     })
-
-}
-function ViewCoach() {
-    let name=$(`#name1`).val()
-    let nationality=$(`#nationality1`).val()
-    let doB=$(`#doB1`).val()
-    let base_salary=$(`#base_salary`).val()
-    let cv=$(`#cv`).val()
-    let coach={
-        "name":name,
-        "nationality":nationality,
-        "doB":doB,
-        "base_salary":base_salary,
-        "cv":cv
-    }
-    $.ajax({
-        type:"POST",
-        url:"http://localhost:8080/coach",
-        data:JSON.stringify(coach),
-        success:showAllCoach
-    });
-    event.preventDefault();
-
 }
