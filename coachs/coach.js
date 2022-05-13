@@ -10,7 +10,6 @@ function showAllCoach() {
              <th>${coach[i].name}</th>
              <th>${coach[i].nationality.name}</th>
              <th>${coach[i].doB}</th>
-             
              <td><button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="showCoachDetail(${coach[i].id})">View</button></td>
 
 </tr>`
@@ -64,7 +63,7 @@ function showCoachDetail(id) {
     })
 
 }
-function ViewCoach() {
+function ViewCoach(id) {
     let name=$(`#name1`).val()
     let nationality=$(`#nationality1`).val()
     let doB=$(`#doB1`).val()
