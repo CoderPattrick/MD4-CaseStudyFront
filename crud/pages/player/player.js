@@ -147,13 +147,11 @@ function editPlayer(id) {
         processData: false,
         contentType: false,
         success: function () {
-            alert("ok")
             getAllPlayer();
             showSuccessMessage('Sửa thành công!');
         },
         error: function () {
-            alert("that bai")
-            showErrorMessage('Sửa lỗi!');
+            showErrorMessage('Thất bại!');
         }
     })
 }
@@ -241,3 +239,35 @@ function getPosition() {
 $(document).ready(function () {
     getAllPlayer();
 })
+
+function showSuccessMessage(message) {
+    $(function () {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+        Toast.fire({
+            icon: 'success',
+            title: message
+        })
+    });
+}
+
+function showErrorMessage(message) {
+    $(function () {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+        Toast.fire({
+            icon: 'error',
+            title: message
+        })
+    });
+}
