@@ -16,8 +16,8 @@ function getAllPlayer() {
         <td>${playerList[i].status.name}</td>
          <td><button class="btn btn-primary" data-target="#create-product" data-toggle="modal"
                                         type="button" onclick="showEditPlayer(${playerList[i].id})"><i>Chỉnh sửa</i></button></td>
-        <td><button class="btn btn-danger" data-target="#edit-product" data-toggle="modal"
-                                        type="button" onclick="showDeleteProduct(${playerList[i].id})"><i>Chi tiết</i></button></td>
+        <td><button class="btn btn-danger" data-target="#detail-product" data-toggle="modal"
+                                        type="button" onclick="showDetailPlayer(${playerList[i].id})"><i>Chi tiết</i></button></td>
        
     </tr>`
             }
@@ -28,6 +28,75 @@ function getAllPlayer() {
 }
 
 function showDetailPlayer(id) {
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:8080/player/${id}`,
+        success: function (player) {
+            let tableDetail = `<table>
+                        <tr>
+                        <img src="http://localhost:8080/image/${player.avatar}" width="200" height="160">
+                       <tr>
+                       <tr>
+                            <th>Tên cầu thủ:</th>
+                            <th></th>
+                            <th></th>
+                            <th>${player.name}</th>
+                           
+                        </tr>
+                            <td>Chiều cao:</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.height}</td>
+                        </tr>
+                        <tr>
+                            <td>Cân nặng:</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.weight}</td>
+                        </tr>
+                        <tr>
+                            <td>Vị trí</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.position.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Ngày Sinh</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.doB}</td>
+                        </tr>
+                        <tr>
+                            <td>Quốc tịch:</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.nationality.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Phong độ:</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.performance.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Trạng thái</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.status.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Lương cơ bản</td>
+                            <td></td>
+                            <td></td>
+                            <td>${player.base_salary}</td>
+                        </tr>
+                    </table>`;
+            $('#detail-body').html(tableDetail);
+        }
+    })
+
+
+
 
 }
 
@@ -75,7 +144,8 @@ function addNewPlayer() {
 function showEditPlayer(id) {
     let title = 'Chỉnh sửa thông tin cầu thủ';
     let footer = `<button class="btn btn-secondary" data-dismiss="modal" type="button">Đóng</button>
-                    <button class="btn btn-primary" onclick="editPlayer(${id})" type="button" aria-label="Close" class="close" data-dismiss="modal">Cập nhật</button>`;
+                    <button class="btn btn-primary" onclick="editPlayer(${id})" type="button" aria-label="Close"
+                     class="close" data-dismiss="modal">Cập nhật</button>`;
     $(`#name`).val(null);
     $(`#position`).val(null);
     $(`#DoB`).val(null);

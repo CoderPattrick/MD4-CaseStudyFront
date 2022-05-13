@@ -33,6 +33,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+
 <div class="wrapper">
     <!-- /.navbar -->
 
@@ -167,6 +168,26 @@
         </section>
         <!-- /.content -->
     </div>
+    <div class="modal fade" id="detail-product">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="detail-product-title"></h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detail-body">
+
+                </div>
+                <div class="modal-footer justify-content-between" id="detail-product-footer">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <div class="modal fade" id="create-product">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -235,7 +256,28 @@
         <!-- /.modal-dialog -->
     </div>
 
+    <div class="modal fade" id="detail-player">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="detail-title">Chi Tiết</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button" >
+                        <span aria-hidden="true" ><h1>X</h1></span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+                    <div id="table-detail">
 
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between" id="detail-footer">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!-- Main content -->
 </div>
