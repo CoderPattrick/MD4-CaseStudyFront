@@ -8,6 +8,8 @@
 <h1>Player Info</h1>
 <select name="position" id="position" onchange="getPlayerByPosition(this.value)"></select>
 <select name="status" id="status" onchange="getPlayerByStatus(this.value)"></select>
+Search By Name:<input type="text" id="player_name" name="player_name" onchange="getPlayerByName(this.value)"><br>
+Search by salary: Min: <input type="text" id="min_salary" name="min_salary"> Max: <input type="text" id="max_salary" name="max_salary"> Search by salary: <button onclick="getPlayerBySalary()">search</button>
 <table id="player_list" border="1">
     <tr>
         <th>Avatar</th>
@@ -31,11 +33,12 @@
                     "        <th>Player_DoB</th>" +
                     "        <th>Nationality</th>" +
                     "        <th>Performance</th>" +
+                    "        <th>Position</th>" +
                     "        <th>Status</th>" +
+                    "        <th>Salary</th>" +
                     "    </tr>";
                 for (let i = 0; i < data.length; i++) {
-                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].status+"</td></tr>";
-                }
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td><td>"+data[i].status+"</td><td>"+data[i].base_salary+"</td></tr>";                }
                 $('#player_list').html(content);
             }
         })
@@ -51,10 +54,11 @@
                     "        <th>Nationality</th>" +
                     "        <th>Performance</th>" +
                     "        <th>Position</th>" +
-                    "    </tr>";
+                    "        <th>Status</th>" +
+                    "        <th>Salary</th>" +
+                    "    </tr>";;
                 for (let i = 0; i < data.length; i++) {
-                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td></tr>";
-                }
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td><td>"+data[i].status+"</td><td>"+data[i].base_salary+"</td></tr>";                }
                 $('#player_list').html(content);
             }
         })
@@ -82,6 +86,50 @@
                     content+=`<option value="${data[i].id}">${data[i].name}</option>`
                 }
                 $('#status').html(content);
+            }
+        })
+    }
+    function getPlayerByName(name){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/player/name?name="+name,
+            success:function (data){
+                let content ="<tr><th>Avatar</th>" +
+                    "        <th>Player</th>" +
+                    "        <th>Player_DoB</th>" +
+                    "        <th>Nationality</th>" +
+                    "        <th>Performance</th>" +
+                    "        <th>Position</th>" +
+                    "        <th>Status</th>" +
+                    "        <th>Salary</th>" +
+                    "    </tr>";
+                for (let i = 0; i < data.length; i++) {
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td><td>"+data[i].status+"</td><td>"+data[i].base_salary+"</td></tr>";
+                }
+                $('#player_list').html(content);
+            }
+        })
+    }
+    function getPlayerBySalary(){
+        let min = document.getElementById("min_salary").value;
+        let max = document.getElementById("max_salary").value;
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/player/salary?min="+min+"&max="+max,
+            success:function (data){
+                let content ="<tr><th>Avatar</th>" +
+                    "        <th>Player</th>" +
+                    "        <th>Player_DoB</th>" +
+                    "        <th>Nationality</th>" +
+                    "        <th>Performance</th>" +
+                    "        <th>Position</th>" +
+                    "        <th>Status</th>" +
+                    "        <th>Salary</th>" +
+                    "    </tr>";
+                for (let i = 0; i < data.length; i++) {
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td><td>"+data[i].status+"</td><td>"+data[i].base_salary+"</td></tr>";
+                }
+                $('#player_list').html(content);
             }
         })
     }
