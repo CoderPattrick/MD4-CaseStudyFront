@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Player</title>
+</head>
+<body>
+<h1>Player Info</h1>
+<select name="position" id="position" onchange="getPlayerByPosition(this.value)"></select>
+<select name="status" id="status" onchange="getPlayerByStatus(this.value)"></select>
+<table id="player_list" border="1">
+    <tr>
+        <th>Avatar</th>
+        <th>Player</th>
+        <th>Player_DoB</th>
+        <th>Nationality</th>
+        <th>Performance</th>
+        <th>Status</th>
+    </tr>
+</table>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function getPlayerByPosition(position_id){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/player/position/"+position_id,
+            success:function (data){
+                let content ="<tr><th>Avatar</th>" +
+                    "        <th>Player</th>" +
+                    "        <th>Player_DoB</th>" +
+                    "        <th>Nationality</th>" +
+                    "        <th>Performance</th>" +
+                    "        <th>Status</th>" +
+                    "    </tr>";
+                for (let i = 0; i < data.length; i++) {
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].status+"</td></tr>";
+                }
+                $('#player_list').html(content);
+            }
+        })
+    }
+    function getPlayerByStatus(status_id){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/player/status/"+status_id,
+            success:function (data){
+                let content ="<tr><th>Avatar</th>" +
+                    "        <th>Player</th>" +
+                    "        <th>Player_DoB</th>" +
+                    "        <th>Nationality</th>" +
+                    "        <th>Performance</th>" +
+                    "        <th>Position</th>" +
+                    "    </tr>";
+                for (let i = 0; i < data.length; i++) {
+                    content+="<tr><td>"+data[i].avatar+"</td><td>"+data[i].player+"</td><td>"+data[i].player_dob+"</td><td>"+data[i].nationality+"</td><td>"+data[i].performance+"</td><td>"+data[i].position+"</td></tr>";
+                }
+                $('#player_list').html(content);
+            }
+        })
+    }
+    function getAllPosition(){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/position",
+            success:function (data){
+                let content ="";
+                for (let i = 0; i < data.length; i++) {
+                    content+=`<option value="${data[i].id}">${data[i].name}</option>`
+                }
+                $('#position').html(content);
+            }
+        })
+    }
+    function getAllStatus(){
+        $.ajax({
+            type: "GET",
+            url:"http://localhost:8080/status",
+            success:function (data){
+                let content ="";
+                for (let i = 0; i < data.length; i++) {
+                    content+=`<option value="${data[i].id}">${data[i].name}</option>`
+                }
+                $('#status').html(content);
+            }
+        })
+    }
+    getAllStatus();
+    getAllPosition();
+</script>
+</html>
