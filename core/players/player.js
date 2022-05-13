@@ -90,7 +90,7 @@ $.ajax({
          $('#height').val(player.height)
          $('#weight').val(player.weight)
          $('#cv').val(player.cv)
-         $('#avtar').val(player.avatar)
+         $('#avatar').val(player.avatar)
     }
 })
 }
