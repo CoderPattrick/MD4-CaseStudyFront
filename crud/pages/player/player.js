@@ -31,7 +31,6 @@ function showDetailPlayer(id) {
 
 }
 
-
 function addNewPlayer() {
     let name = $('#name').val();
     let position = $('#position').val();
@@ -88,6 +87,8 @@ function showEditPlayer(id) {
     $(`#weight`).val(null);
     $(`#cv`).val(null);
     $(`#avatar`).val(null);
+    $('#create-product-title').html(title);
+    $('#create-product-footer').html(footer);
     $.ajax({
         type: 'GET',
         url: `http://localhost:8080/player/${id}`,
@@ -102,9 +103,8 @@ function showEditPlayer(id) {
             $(`#base_salary`).val(player.base_salary);
             $(`#height`).val(player.height);
             $(`#weight`).val(player.weight);
-            // let cv =`<img src="http://localhost:8080/image/${player.cv}">`
-            let cv =
-            $('#cv_player').val(player.cv)
+            let cv = `<i><p style="color: blue">CV cũ:</p><p style="color: red"> ${player.cv}</p><i/>`;
+            $('#cv_player').html(cv);
             let avatar = `<img src="http://localhost:8080/image/${player.avatar}" height="50" alt="image">`
             $('#avatar_player').html(avatar);
         }
@@ -113,7 +113,49 @@ function showEditPlayer(id) {
     getPerformance();
     getStatus();
     getPosition();
+}
 
+function editPlayer(id) {
+    let name = $('#name').val();
+    let position = $(`#position`).val();
+    let DoB = $('#DoB').val();
+    let nationality = $('#nationality').val();
+    let performance = $('#performance').val();
+    let status = $('#status').val();
+    let base_salary = $('#base_salary').val();
+    let height = $('#height').val();
+    let weight = $('#weight').val();
+    let avatar = $('#avatar');
+    let cv = $('#cv');
+    let player = new FormData();
+    player.append('name', name);
+    player.append('position', position);
+    player.append('DoB', DoB);
+    player.append('nationality', nationality);
+    player.append('performance', performance);
+    player.append('status', status);
+    player.append('base_salary', base_salary);
+    player.append('height', height);
+    player.append('weight', weight);
+    player.append('avatar', avatar.prop('files')[0])
+    player.append('cv', cv.prop('files')[0])
+    $.ajax({
+        type: 'POST',
+        url: `http://localhost:8080/player/${id}`,
+        data: player,
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        success: function () {
+            alert("ok")
+            getAllPlayer();
+            showSuccessMessage('Sửa thành công!');
+        },
+        error: function () {
+            alert("that bai")
+            showErrorMessage('Sửa lỗi!');
+        }
+    })
 }
 
 function showCreatePlayerForm() {

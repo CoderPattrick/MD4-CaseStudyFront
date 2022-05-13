@@ -24,6 +24,48 @@ function getAllCoach() {
     })
 }
 
+function showEditCoach(id) {
+    let title = 'Chỉnh sửa thông tin cầu thủ';
+    let footer = `<button class="btn btn-secondary" data-dismiss="modal" type="button">Đóng</button>
+                    <button class="btn btn-primary" onclick="editPlayer(${id})" type="button" aria-label="Close" class="close" data-dismiss="modal">Cập nhật</button>`;
+    $(`#name`).val(null);
+    $(`#position`).val(null);
+    $(`#DoB`).val(null);
+    $(`#nationality`).val(null);
+    $(`#performance`).val(null);
+    $(`#status`).val(null);
+    $(`#base_salary`).val(null);
+    $(`#height`).val(null);
+    $(`#weight`).val(null);
+    $(`#cv`).val(null);
+    $(`#avatar`).val(null);
+    $('#create-product-title').html(title);
+    $('#create-product-footer').html(footer);
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:8080/player/${id}`,
+
+        success: function (player) {
+            $('#name').val(player.name);
+            $(`#position`).val(player.position.name);
+            $(`#DoB`).val(player.doB);
+            $(`#nationality`).val(player.nationality);
+            $(`#performance`).val(player.performance);
+            $(`#status`).val(player.status);
+            $(`#base_salary`).val(player.base_salary);
+            $(`#height`).val(player.height);
+            $(`#weight`).val(player.weight);
+            let cv = `<i><p style="color: blue">CV cũ:</p><p style="color: red"> ${player.cv}</p><i/>`;
+            $('#cv_player').html(cv);
+            let avatar = `<img src="http://localhost:8080/image/${player.avatar}" height="50" alt="image">`
+            $('#avatar_player').html(avatar);
+        }
+    })
+    getNationality();
+    getPerformance();
+    getStatus();
+    getPosition();
+}
 
 function addNewCoach() {
     let name = $('#name').val();
