@@ -1,5 +1,23 @@
+function checkUser() {
+    if (data == null){
+        window.location.href = "../login/login.html"
+        return false;
+    }
+    return true;
+}
+let data = localStorage.getItem("data");
+checkUser();
+showAllCoach();
 function showAllCoach() {
+    let obj = JSON.parse(data);
+    let name = obj.name;
+    $('#name').html(name)
+    let token = obj.accessToken;
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type:"GET",
         url:"http://localhost:8080/coach",
         success:function (coach) {
@@ -19,8 +37,11 @@ function showAllCoach() {
     })
 
 }
-showAllCoach();
+
 function showCoachDetail(id) {
+    data = localStorage.getItem("data");
+    if(checkUser()){
+    let token=JSON.parse(data).accessToken;
     let content=`<div>
  <form id="coach">
                     <div class="mb-3">
@@ -50,6 +71,10 @@ function showCoachDetail(id) {
 </div>`
     $("#showDetail").html(content);
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type: "GET",
         url: "http://localhost:8080/coach/" +id,
         success:function (coach) {
@@ -60,4 +85,4 @@ function showCoachDetail(id) {
             $('#cv').val(coach.cv)
         }
     })
-}
+}}

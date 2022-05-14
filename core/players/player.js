@@ -1,18 +1,19 @@
+function checkUser() {
+    if (data == null) {
+        window.location.href = "../login/login.html"
+        return false;
+    }
+    return true;
+}
 let data = localStorage.getItem("data");
-if (data == null){
-    window.location.href = "../login/login.html"
-}
-else {
-    let obj = JSON.parse(data);
-    let name = obj.name;
-    console.log(name);
-    $('#name').html(name)
-    let token = obj.accessToken;
-    showPlayer(token);
-}
+    checkUser();
+    showPlayer();
 
-
-function showPlayer(token) {
+function showPlayer() {
+        let obj = JSON.parse(data);
+        let name = obj.name;
+        $('#name').html(name)
+        let token = obj.accessToken;
     $.ajax({
         headers:{
             'Authorization': 'Bearer '+ token,
@@ -38,8 +39,11 @@ function showPlayer(token) {
         }
     })
 }
-function PlayerView(id,token) {
-let content= `<div>
+function PlayerView(id) {
+    data=localStorage.getItem("data");
+    if (checkUser()){
+        let token=JSON.parse(data).accessToken;
+        let content= `<div>
  <form>
                     <div class="mb-3">
                         <label for="name1" class="form-label">Name</label>
@@ -94,6 +98,10 @@ let content= `<div>
 </div>`
     $("#showDetail").html(content);
 $.ajax({
+    headers:{
+        'Authorization': 'Bearer '+ token,
+        'Access-control-allow-origin': '*'
+    },
      type: "GET",
     url: "http://localhost:8080/player/"+id,
     success:function (player) {
@@ -110,4 +118,4 @@ $.ajax({
          $('#avatar').val(player.avatar)
     }
 })
-}
+}}
