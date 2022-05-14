@@ -1,18 +1,18 @@
-let data = localStorage.getItem("data");
-if (data == null){
-    window.location.href = "../login/login.html"
-}
-else {
-    let obj = JSON.parse(data);
-    let name = obj.name;
-    console.log(name);
-    $('#name').html(name)
-    let token = obj.accessToken;
-    showPlayer(token);
+let user = localStorage.getItem("user");
+
+function getToken() {
+    if (user == null){
+        window.location.href = "../login/login.html";
+    }
+    else {
+        let obj = JSON.parse(user);
+        let token = obj.accessToken;
+        return token;
+    }
 }
 
-
-function showPlayer(token) {
+function showPlayer() {
+    let token = getToken();
     $.ajax({
         headers:{
             'Authorization': 'Bearer '+ token,
@@ -38,7 +38,10 @@ function showPlayer(token) {
         }
     })
 }
-function PlayerView(id,token) {
+showPlayer();
+
+function PlayerView(id) {
+let token = getToken();
 let content= `<div>
  <form>
                     <div class="mb-3">
@@ -94,7 +97,11 @@ let content= `<div>
 </div>`
     $("#showDetail").html(content);
 $.ajax({
-     type: "GET",
+    headers:{
+        'Authorization': 'Bearer '+ token,
+        'Access-control-allow-origin': '*'
+    },
+    type: "GET",
     url: "http://localhost:8080/player/"+id,
     success:function (player) {
          $('#name1').val(player.name)

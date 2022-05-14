@@ -15,9 +15,26 @@ function login() {
         type: "POST",
         url: "http://localhost:8080/login",
         data: JSON.stringify(user),
-        success: function (data){
-            localStorage.setItem("data", JSON.stringify(data));
-            window.location.href = "../players/list.html"
+        success: function (user){
+            localStorage.setItem("user", JSON.stringify(user));
+            let userStorage = localStorage.getItem("user");
+            let userDetail = JSON.parse(userStorage);
+            let role = userDetail.authority;
+            let id = userDetail.id;
+            switch (role) {
+                case "ROLE_ADMIN": window.location.href = "";
+                break;
+
+                case "ROLE_COACH": window.location.href = "";
+                break;
+
+                case "ROLE_PLAYER": window.location.href = "";
+                break;
+
+                default:
+                    window.location.href = "../login/login.html";
+                    break;
+            }
         }
     })
 }
