@@ -57,7 +57,7 @@ function showDetailCoach(id) {
                             <td>${player.base_salary}</td>
                         </tr>
                     </table>`;
-            $('#detail-body').html(tableDetail);
+            $('#table-detail-coach').html(tableDetail);
         }
     })
 
