@@ -1,5 +1,23 @@
+let user = localStorage.getItem("user");
+
+function getToken() {
+    if (user == null){
+        window.location.href = "../login/login.html";
+    }
+    else {
+        let obj = JSON.parse(user);
+        let token = obj.accessToken;
+        return token;
+    }
+}
+
 function showPlayer() {
+    let token = getToken();
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type:"GET",
         url:"http://localhost:8080/player",
         success:function (player) {
@@ -21,7 +39,9 @@ function showPlayer() {
     })
 }
 showPlayer();
+
 function PlayerView(id) {
+let token = getToken();
 let content= `<div>
  <form>
                     <div class="mb-3">
@@ -77,7 +97,11 @@ let content= `<div>
 </div>`
     $("#showDetail").html(content);
 $.ajax({
-     type: "GET",
+    headers:{
+        'Authorization': 'Bearer '+ token,
+        'Access-control-allow-origin': '*'
+    },
+    type: "GET",
     url: "http://localhost:8080/player/"+id,
     success:function (player) {
          $('#name1').val(player.name)
@@ -85,7 +109,7 @@ $.ajax({
          $('#dob1').val(player.doB)
          $('#nationality1').val(player.nationality.name)
          $('#performance1').val(player.performance.name)
-        $('#status1').val(player.status.name)
+         $('#status1').val(player.status.name)
          $('#base_salary').val(player.base_salary)
          $('#height').val(player.height)
          $('#weight').val(player.weight)
