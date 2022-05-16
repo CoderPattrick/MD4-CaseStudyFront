@@ -25,10 +25,10 @@ function login() {
                 case "ROLE_ADMIN": window.location.href = "";
                 break;
 
-                case "ROLE_COACH": window.location.href = "";
+                case "ROLE_COACH": window.location.href = "../players/list.html";
                 break;
 
-                case "ROLE_PLAYER": window.location.href = "";
+                case "ROLE_PLAYER": window.location.href = "../players/list.html";
                 break;
 
                 default:

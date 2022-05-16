@@ -14,10 +14,10 @@ function getToken() {
 function showPlayer() {
     let token = getToken();
     $.ajax({
-        headers:{
-            'Authorization': 'Bearer '+ token,
-            'Access-control-allow-origin': '*'
-        },
+            headers:{
+                'Authorization': 'Bearer '+ token,
+                'Access-control-allow-origin': '*'
+            },
         type:"GET",
         url:"http://localhost:8080/player",
         success:function (player) {
