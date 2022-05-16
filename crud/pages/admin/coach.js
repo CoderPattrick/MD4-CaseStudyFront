@@ -1,3 +1,15 @@
+let user = localStorage.getItem("user");
+
+function getToken() {
+    if (user == null){
+        window.location.href = "../login/login.html";
+    }
+    else {
+        let obj = JSON.parse(user);
+        let token = obj.accessToken;
+        return token;
+    }
+}
 getAllCoach();
 
 function getAllCoach() {
@@ -25,6 +37,7 @@ function getAllCoach() {
 }
 
 function showDetailCoach(id) {
+
     $.ajax({
         type: 'GET',
         url: `http://localhost:8080/coach/${id}`,

@@ -1,6 +1,24 @@
+let user = localStorage.getItem("user");
+
+function getToken() {
+    if (user == null){
+        window.location.href = "../auth/login.html";
+    }
+    else {
+        let obj = JSON.parse(user);
+        let token = obj.accessToken;
+        return token;
+    }
+}
+
 function showDetailCoach() {
-    let id = JSON.parse(localStorage.getItem("user")).id;
+    let token = getToken();
+    let id = JSON.parse("user").id;
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type: 'GET',
         url: `http://localhost:8080/coach/${id}`,
         success: function (coach) {

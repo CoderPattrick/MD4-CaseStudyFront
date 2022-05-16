@@ -1,6 +1,22 @@
+let user = localStorage.getItem("user");
 
+function getToken() {
+    if (user == null){
+        window.location.href = "../auth/login.html";
+    }
+    else {
+        let obj = JSON.parse(user);
+        let token = obj.accessToken;
+        return token;
+    }
+}
 function getAllPlayer() {
+    let token = getToken();
     $.ajax({
+        headers:{
+            'Authorization': 'Bearer '+ token,
+            'Access-control-allow-origin': '*'
+        },
         type: 'GET',
         url: `http://localhost:8080/player`,
 
