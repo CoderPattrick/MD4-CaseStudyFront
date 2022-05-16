@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý HLV</title>
+    <title>chi tiết cầu thủ</title>
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
           rel="stylesheet">
@@ -31,9 +31,9 @@
     <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="coach.js"></script>
+    <script src="coach-detail.js"></script>
     <script src="../../notification.js"></script>
-    <script src="coach.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -42,7 +42,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a class="brand-link" href="coach.html">
+        <a class="brand-link" href="#">
             <img alt="AdminLTE Logo" class="brand-image img-circle elevation-3" src="../../dist/img/AdminLTELogo.png"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">Trang chủ</span>
@@ -66,23 +66,23 @@
                     role="menu">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a class="nav-link" href="coach-detail.html">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Thông tin cá nhân</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="player-list.html">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Quản lý cầu thủ</p>
-                                </a>
-                            </li>
+                    <!--                    <li class="nav-item menu-open">-->
+                    <!--                        <ul class="nav nav-treeview">-->
+                    <!--                            <li class="nav-item">-->
+                    <!--                                <a class="nav-link" href="coach.html">-->
+                    <!--                                    <i class="far fa-circle nav-icon"></i>-->
+                    <!--                                    <p>Thông tin cá nhân</p>-->
+                    <!--                                </a>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="nav-item">-->
+                    <!--                                <a class="nav-link" href="player-list.html">-->
+                    <!--                                    <i class="far fa-circle nav-icon"></i>-->
+                    <!--                                    <p>Quản lý cầu thủ</p>-->
+                    <!--                                </a>-->
+                    <!--                            </li>-->
 
-                        </ul>
-                    </li>
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -91,48 +91,36 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div>
+                        <h1 style="text-align: center; color: blue">Thông tin cá nhân</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
 
-    <div class="modal fade" id="create-category">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="create-category-title"></h4>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <!-- Main content -->
+        <div id="detail-info">
+            <table class="container" style="border: black; width: 100%; height: 600px">
+                <div>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="name">Tên HLV:</label>
-                        <input class="form-control" id="name" placeholder="Nhập tên HLV" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="DoB">Ngày sinh:</label>
-                        <input class="form-control" id="DoB" placeholder="Nhập ngày sinh" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="nationality">Quốc tịch:</label>
-                        <select class="form-control" id="nationality"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="base_salary">Lương CB:</label>
-                        <input class="form-control" id="base_salary" placeholder="Nhập lương CB" type="text">
-                    </div>
-                    <div class="form-group" id="cv_coach">
-                    </div>
-                    <div class="form-group">
-                        <label for="cv">CV</label>
-                        <input class="form-control" id="cv" type="file">
-                    </div>
+                <div id="detail-player">
+
                 </div>
-                <div class="modal-footer justify-content-between" id="create-category-footer">
-                </div>
-            </div>
-            <!-- /.modal-content -->
+            </table>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.content -->
     </div>
-
 
 
     <!-- Main content -->
@@ -140,6 +128,7 @@
 <script crossorigin="anonymous"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="player.js"></script>
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -177,7 +166,6 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../dist/js/pages/dashboard.js"></script>
-<script src="../../notification.js"></script>
-<script src="coach.js"></script>
+
 </body>
 </html>
